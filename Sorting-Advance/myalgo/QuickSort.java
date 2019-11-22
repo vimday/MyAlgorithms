@@ -42,12 +42,8 @@ public class QuickSort {
         swap(arr,idx,l);
         Comparable e=arr[l];
         while(l<r){
-            while(l<r&&e.compareTo(arr[r])<0) r--;
-            //arr[l++]=arr[r];
-            while(l<r&&e.compareTo(arr[l])>0) l++;
-            //arr[r--]=arr[l];
-            if(l<r)
-                swap(arr,l++,r--);
+            while (l < r ) if(e.compareTo(arr[r])<0) r--; else {arr[l++]=arr[r];break;}
+            while (l < r) if(e.compareTo(arr[l])>0) l++; else {arr[r--]=arr[l];break;}
         }
         arr[l]=e;
         //System.out.println(l);

@@ -14,6 +14,7 @@ public class QuickSort2Ways {
             InsertionSort.sort(arr, l, r);
             return;
         }
+        //if(l>=r) return;
         int p = partitionB(arr, l, r);
         sort(arr, l, p - 1);
         sort(arr, p + 1, r);
@@ -62,10 +63,8 @@ public class QuickSort2Ways {
         swap(arr, l, (int) (Math.random() * (r - l + 1)) + l);
         Comparable e = arr[l];
         while (l < r) {
-            while (l < r && e.compareTo(arr[r]) < 0) r--;
-            while (l < r && e.compareTo(arr[l]) > 0) l++;
-            if(l<r)
-                swap(arr,l++,r--);
+            while (l < r ) if(e.compareTo(arr[r])<0) r--; else {arr[l++]=arr[r];break;}
+            while (l < r) if(e.compareTo(arr[l])>0) l++; else {arr[r--]=arr[l];break;}
         }
         arr[l] = e;
         return l;
@@ -82,10 +81,13 @@ public class QuickSort2Ways {
 
         //双路快速排序算法也是一个O(nlogn)复杂度的算法
         // 可以在1秒之内轻松处理100万数量级的数据
+        Integer[] arr={3,1,6,9,10};
+        QuickSort2Ways.sort(arr);
+        SortTestHelper.printArray(arr);
         int N = 1000000;
-        Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 1000000);
+        Integer[] arr1 = SortTestHelper.generateRandomArray(N, 0, 1000000);
 
-        SortTestHelper.testSort("myalgo.QuickSort2Ways", arr);
+        SortTestHelper.testSort("myalgo.QuickSort2Ways", arr1);
         //for(Integer i:arr)
           //  System.out.println(i);
     }
