@@ -2,10 +2,13 @@ package myalgo;
 
 import java.util.Arrays;
 
-public class MergeSort{
+// 优化的Merge Sort算法
+// 在课程中, 主要向大家介绍了归并排序的两个优化点
+// 关于归并排序的更多优化, 请参考本章节后续的补充内容
+public class MergeSortO{
 
     // 我们的算法类不允许产生任何实例
-    private MergeSort(){}
+    private MergeSortO(){}
 
     // 将arr[l...mid]和arr[mid+1...r]两部分进行归并
     private static void merge(Comparable[] arr, int l, int mid, int r) {
@@ -34,13 +37,20 @@ public class MergeSort{
     // 递归使用归并排序,对arr[l...r]的范围进行排序
     private static void sort(Comparable[] arr, int l, int r) {
 
-        if (l >= r)
+        // 优化2: 对于小规模数组, 使用插入排序
+        if( r - l <= 15 ){
+            InsertionSort.sort(arr, l, r);
             return;
+        }
 
         int mid = (l+r)/2;
         sort(arr, l, mid);
         sort(arr, mid + 1, r);
-        merge(arr, l, mid, r);
+
+        // 优化1: 对于arr[mid] <= arr[mid+1]的情况,不进行merge
+        // 对于近乎有序的数组非常有效,但是对于一般情况,有一定的性能损失
+        if( arr[mid].compareTo(arr[mid+1]) > 0 )
+            merge(arr, l, mid, r);
     }
 
     public static void sort(Comparable[] arr){
@@ -49,7 +59,7 @@ public class MergeSort{
         sort(arr, 0, n-1);
     }
 
-    // 测试MergeSort
+    // 测试MergeSortO
     public static void main(String[] args) {
 
         // Merge Sort是我们学习的第一个O(nlogn)复杂度的算法
@@ -58,7 +68,7 @@ public class MergeSort{
         // 否则，你就见识了O(n^2)的算法和O(nlogn)算法的本质差异：）
         int N = 1000000;
         Integer[] arr = SortTestHelper.generateRandomArray(N, 0, 100000);
-        SortTestHelper.testSort("myalgo.MergeSort", arr);
+        SortTestHelper.testSort("myalgo.MergeSortO", arr);
 
         return;
     }
