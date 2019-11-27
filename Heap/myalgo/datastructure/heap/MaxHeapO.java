@@ -1,14 +1,14 @@
 package myalgo.datastructure.heap;
 
-// 在堆的有关操作中，需要比较堆中元素的大小，所以Item需要extends Comparable
-public class MaxHeap<Item extends Comparable> {
+// 将 ShiftUp 和 ShiftDown 函数使用类似插入排序算法的方式进行优化的最大堆
+public class MaxHeapO<Item extends Comparable> {
 
     protected Item[] data;
     protected int count;
     protected int capacity;
 
     // 构造函数, 构造一个空堆, 可容纳capacity个元素
-    public MaxHeap(int capacity){
+    public MaxHeapO(int capacity){
         data = (Item[])new Comparable[capacity+1];
         count = 0;
         this.capacity = capacity;
@@ -16,7 +16,7 @@ public class MaxHeap<Item extends Comparable> {
 
     // 构造函数, 通过一个给定数组创建一个最大堆
     // 该构造堆的过程, 时间复杂度为O(n)
-    public MaxHeap(Item arr[]){
+    public MaxHeapO(Item arr[]){
 
         int n = arr.length;
 
@@ -80,35 +80,40 @@ public class MaxHeap<Item extends Comparable> {
     //* 最大堆核心辅助函数
     //********************
     private void shiftUp(int k){
-
-        while( k > 1 && data[k/2].compareTo(data[k]) < 0 ){
-            swap(k, k/2);
+        Item e = data[k];
+        while( k > 1 && data[k/2].compareTo(e) < 0 ){
+            //swap(k, k/2);
+            data[k] = data[k/2];
             k /= 2;
         }
+        data[k] = e;
     }
 
     private void shiftDown(int k){
 
+        Item e = data[k];
         while( 2*k <= count ){
             int j = 2*k; // 在此轮循环中,data[k]和data[j]交换位置
             if( j+1 <= count && data[j+1].compareTo(data[j]) > 0 )
                 j ++;
             // data[j] 是 data[2*k]和data[2*k+1]中的最大值
 
-            if( data[k].compareTo(data[j]) >= 0 ) break;
-            swap(k, j);
+            if( e.compareTo(data[j]) >= 0 ) break;
+            //swap(k, j);
+            data[k] = data[j];
             k = j;
         }
+        data[k] = e;
     }
 
-    // 测试 MaxHeap
+    // 测试 MaxHeapO
     public static void main(String[] args) {
 
-        MaxHeap<Integer> maxHeap = new MaxHeap<Integer>(100);
+        MaxHeapO<Integer> maxHeap = new MaxHeapO<Integer>(100);
         int N = 100; // 堆中元素个数
         int M = 100; // 堆中元素取值范围[0, M)
         for( int i = 0 ; i < N ; i ++ )
-            maxHeap.insert((int) (Math.random() * M));
+            maxHeap.insert( new Integer((int)(Math.random() * M)) );
 
         Integer[] arr = new Integer[N];
         // 将maxheap中的数据逐渐使用extractMax取出来
