@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Sorting-Advance" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Heap" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Binary-Search-Tree" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BinarySearchTree" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
